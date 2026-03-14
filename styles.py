@@ -5,42 +5,54 @@ def apply_styles():
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Assistant:wght@300;400;600&display=swap');
 
-    .stApp { background-color: #F9F7F2; direction: rtl; }
-    header, footer, [data-testid="stHeader"] {display: none !important;}
-
-    /* עיצוב הטאבים (הפרקים בספר) */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 10px;
-        background-color: transparent;
+    /* רקע לינן יוקרתי */
+    .stApp { 
+        background-color: #F9F7F2; 
+        direction: rtl; 
+    }
+    
+    /* עיצוב הבר העליון הקבוע */
+    .main-header {
+        background-color: white;
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid #E8E4D8;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+    }
+    
+    .header-title {
+        font-family: 'Playfair Display', serif;
+        color: #2D2926;
+        margin: 0;
+        font-size: 24px;
     }
 
-    .stTabs [data-baseweb="tab"] {
-        background-color: #FFFFFF;
-        border: 1px solid #E8E4D8;
-        border-radius: 4px 4px 0 0;
-        padding: 10px 20px;
-        font-family: 'Assistant', sans-serif;
-        color: #556B2F;
+    /* מרווח כדי שהתוכן לא יתחבא תחת הבר העליון */
+    .content-area {
+        margin-top: 80px;
     }
 
-    .stTabs [aria-selected="true"] {
-        background-color: #556B2F !important;
-        color: white !important;
-        border-color: #556B2F !important;
-    }
-
-    /* דף המתכון */
-    .recipe-page {
+    /* עיצוב כרטיסיית מתכון */
+    .recipe-card {
         background: white;
-        padding: 60px 40px;
-        max-width: 800px;
-        margin: 0 auto;
-        border-radius: 0 0 12px 12px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.05);
-        border-right: 10px solid #556B2F;
+        padding: 30px;
+        border-radius: 4px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        border-right: 6px solid #556B2F;
+        margin-bottom: 20px;
         text-align: right;
     }
 
-    h1, h2 { font-family: 'Playfair Display', serif !important; color: #2D2926; }
+    /* עיצוב התפריט הצדי (Sidebar) */
+    [data-testid="stSidebar"] {
+        background-color: white !important;
+        border-left: 1px solid #E8E4D8;
+    }
+    
+    h2, h3 { font-family: 'Playfair Display', serif; color: #2D2926; }
     </style>
     """, unsafe_allow_html=True)
