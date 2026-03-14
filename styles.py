@@ -5,35 +5,41 @@ def apply_styles():
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Assistant:wght@300;400;600&display=swap');
 
-    /* רקע לינן יוקרתי */
+    /* רקע לינן ויישור לימין */
     .stApp { 
         background-color: #F9F7F2; 
         direction: rtl; 
     }
     
-    /* עיצוב הבר העליון הקבוע */
+    /* הסתרת כפתורי סטרימליט מיותרים והתפריט המובנה שצף */
+    #MainMenu, footer, header {visibility: hidden !important;}
+    [data-testid="stHeader"] {background: rgba(0,0,0,0) !important;}
+
+    /* הבר העליון הממותג שלנו */
     .main-header {
-        background-color: white;
-        padding: 15px;
+        background-color: #FFFFFF;
+        padding: 20px;
         text-align: center;
         border-bottom: 1px solid #E8E4D8;
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        z-index: 1000;
+        z-index: 999;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.02);
     }
     
     .header-title {
         font-family: 'Playfair Display', serif;
         color: #2D2926;
         margin: 0;
-        font-size: 24px;
+        font-size: 22px;
     }
 
-    /* מרווח כדי שהתוכן לא יתחבא תחת הבר העליון */
-    .content-area {
-        margin-top: 80px;
+    /* מרווח לתוכן - למנוע מהכותרת להסתיר */
+    .block-container {
+        padding-top: 100px !important;
+        max-width: 800px !important;
     }
 
     /* עיצוב כרטיסיית מתכון */
@@ -41,18 +47,22 @@ def apply_styles():
         background: white;
         padding: 30px;
         border-radius: 4px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         border-right: 6px solid #556B2F;
         margin-bottom: 20px;
         text-align: right;
     }
 
-    /* עיצוב התפריט הצדי (Sidebar) */
+    /* עיצוב ה-Sidebar */
     [data-testid="stSidebar"] {
-        background-color: white !important;
+        background-color: #FFFFFF !important;
         border-left: 1px solid #E8E4D8;
     }
     
-    h2, h3 { font-family: 'Playfair Display', serif; color: #2D2926; }
+    /* הפיכת ה-Radio למשהו שנראה כמו תפריט יוקרתי */
+    .stRadio > div {
+        flex-direction: column !important;
+        gap: 15px;
+    }
     </style>
     """, unsafe_allow_html=True)
