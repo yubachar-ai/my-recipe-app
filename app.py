@@ -17,7 +17,7 @@ if 'user_name' not in st.session_state:
     st.stop()
 
 current_user = st.session_state.user_name
-model = setup_ai("הדביקי_כאן_את_המפתח_שלך")
+model = setup_ai("AIzaSyDs99bJ-UUG1jLT7lSaitXl6x4x23ZMDqQ")
 
 st.markdown(f"<h1>👩‍🍳 ספר המתכונים של {current_user}</h1>", unsafe_allow_html=True)
 
