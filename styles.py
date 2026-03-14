@@ -3,61 +3,48 @@ import streamlit as st
 def apply_styles():
     st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Assistant:wght@300;400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600&family=Playfair+Display:wght@700&display=swap');
 
-    /* מחיקת תפריט הניווט האוטומטי שחונק את המסך */
-    [data-testid="stSidebarNav"] {display: none !important;}
-    [data-testid="stHeader"] {display: none !important;}
-    footer {display: none !important;}
-
-    /* רקע ויישור לימין */
+    /* הגדרות בסיס */
     .stApp { 
         background-color: #F9F7F2; 
         direction: rtl; 
     }
 
-    /* הבר העליון הלבן */
+    /* העלמת התפריט האוטומטי המציק */
+    [data-testid="stSidebarNav"] {display: none !important;}
+    
+    /* עיצוב ה-Sidebar (שיהיה לבן ונקי) */
+    [data-testid="stSidebar"] {
+        background-color: white !important;
+        border-left: 1px solid #E8E4D8;
+        min-width: 250px !important;
+    }
+
+    /* עיצוב הבר העליון */
     .main-header {
-        background-color: #FFFFFF;
-        padding: 20px;
+        background-color: white;
+        padding: 15px;
         text-align: center;
         border-bottom: 1px solid #E8E4D8;
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
+        top: 0; left: 0; right: 0;
         z-index: 1000;
     }
-    
-    .header-title {
-        font-family: 'Playfair Display', serif;
-        color: #2D2926;
-        margin: 0;
-        font-size: 22px;
-    }
 
-    /* תיקון מרווחים כדי שהתוכן לא ייחתך */
+    /* תיקון המרווח של התוכן - שלא יימרח לאמצע */
     .block-container {
-        padding-top: 100px !important;
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-        max-width: 100% !important;
+        padding-top: 80px !important;
+        max-width: 600px !important; /* זה שומר על המתכונים במרכז נקי ולא מפוזר */
+        margin: 0 auto;
     }
 
-    /* עיצוב רשימת המתכונים */
+    /* עיצוב רשימת המתכונים (Expanders) */
     .stExpander {
+        border: none !important;
         background-color: white !important;
-        border: 1px solid #E8E4D8 !important;
-        border-radius: 8px !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important;
         margin-bottom: 10px !important;
-    }
-
-    .recipe-card {
-        background: white;
-        padding: 20px;
-        text-align: right;
-        direction: rtl;
-        line-height: 1.6;
     }
     </style>
     """, unsafe_allow_html=True)
