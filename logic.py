@@ -42,7 +42,7 @@ def save_recipe_to_cloud(user_name, name, content, category):
 
 def load_recipes_from_cloud(user_name):
     conn = get_connection()
-    url = "כאן_הדביקי_את_הלינק_של_הגיליון_שלך"
+    url = "https://docs.google.com/spreadsheets/d/1_joIbC3TR9ioVMPLHOCdI70c_xxZuFUskKSpagfG8KM/edit?usp=sharing"
     try:
         df = conn.read(spreadsheet=url)
         return df[df['user'] == user_name]
