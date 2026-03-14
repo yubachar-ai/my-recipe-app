@@ -36,17 +36,13 @@ st.markdown(f"""
 # --- תפריט צדי (בלבד!) ---
 with st.sidebar:
     st.markdown("<br><br>", unsafe_allow_html=True)
-    st.markdown("### ניווט")
-    # כאן התיקון הקריטי: השימוש ב-st.sidebar
-    mode = st.sidebar.radio(
-        "בחרי פעולה:",
+    st.markdown("### תפריט")
+    # ה-Radio הזה יופיע עכשיו בצורה נקייה בתוך ה-3 פסים
+    mode = st.radio(
+        "בחר מצב:",
         ["📚 כניסה לספר", "✨ הוספת מתכון"],
-        label_visibility="collapsed" # מסתיר את הכותרת הכפולה
+        label_visibility="collapsed"
     )
-    st.markdown("---")
-    if st.sidebar.button("יציאה מהחשבון"):
-        del st.session_state['user_email']
-        st.rerun()
 
 # --- שטח התוכן ---
 if mode == "✨ הוספת מתכון":
