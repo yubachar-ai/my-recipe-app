@@ -42,9 +42,13 @@ def save_recipe_to_cloud(user_email, name, content, category):
 def load_recipes_from_cloud(user_email):
     try:
         conn = st.connection("gsheets", type=GSheetsConnection)
-        df = conn.read()
+        # הוספת ttl=0 אומרת לאפליקציה: "אל תשמרי כלום בזיכרון, תמיד תבדקי בגוגל"
+        df = conn.read(ttl=0) 
+        
         if df is not None and not df.empty:
-            return df[df['user'] == user_email]
-    except:
-        pass
+            # וודאי שהמייל נשמר באותיות קטנות כדי שהסינון יעבוד
+            user_email_clean = user_email.lower().strip()
+            return df[df['user'].str.lower().str.strip() == user_email_clean]
+    except Exception as e:
+        st.error(f"שגיאה בטעינת הספר: {e}")
     return pd.DataFrame()
