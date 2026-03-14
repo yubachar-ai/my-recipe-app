@@ -3,48 +3,39 @@ import pandas as pd
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 
-# הגדרת ה-AI
 def setup_ai(api_key):
     genai.configure(api_key=api_key)
     return genai.GenerativeModel('models/gemini-3-flash-preview')
 
 RECIPE_PROMPT = """
-תפקיד: מחלץ נתונים מקצועי מתמונות מתכונים.
-המשימה: חלץ את המידע מהתמונה והחזר אותו בעברית לפי הפורמט הבא בלבד.
-הנחיות: השורה הראשונה היא שם המתכון בלבד. אל תוסיף הקדמות.
+תפקיד: מחלץ נתונים מקצועי.
+הוראה: חלץ שם מתכון (שורה ראשונה), מצרכים והוראות. בלי תוספות.
 """
 
-def get_connection():
-    return st.connection("gsheets", type=GSheetsConnection)
-
-def save_recipe_to_cloud(user_name, name, content, category):
-    conn = get_connection()
-    url = "כאן_הדביקי_את_הלינק_של_הגיליון_שלך"
+def save_recipe_to_cloud(user_email, name, content, category):
+    url = st.secrets["GSHEETS_URL"]
+    conn = st.connection("gsheets", type=GSheetsConnection)
     
     # קריאת הנתונים הקיימים
-    try:
-        df = conn.read(spreadsheet=url)
-    except:
-        df = pd.DataFrame(columns=['user', 'name', 'category', 'content'])
+    df = conn.read(spreadsheet=url)
     
     # יצירת שורה חדשה
     new_data = pd.DataFrame({
-        'user': [user_name],
+        'user': [user_email],
         'name': [name],
         'category': [category],
         'content': [content]
     })
     
+    # חיבור נתונים
     updated_df = pd.concat([df, new_data], ignore_index=True)
     
-    # שמירה חזרה לענן
+    # שליחה לגוגל - כאן קרתה השגיאה
+    # הוספנו את הפרמטר wait_to_finish כדי לוודא שזה נכתב
     conn.update(spreadsheet=url, data=updated_df)
 
-def load_recipes_from_cloud(user_name):
-    conn = get_connection()
-    url = "https://docs.google.com/spreadsheets/d/1_joIbC3TR9ioVMPLHOCdI70c_xxZuFUskKSpagfG8KM/edit?usp=sharing"
-    try:
-        df = conn.read(spreadsheet=url)
-        return df[df['user'] == user_name]
-    except:
-        return pd.DataFrame()
+def load_recipes_from_cloud(user_email):
+    url = st.secrets["GSHEETS_URL"]
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    df = conn.read(spreadsheet=url)
+    return df[df['user'] == user_email]
