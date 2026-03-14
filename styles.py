@@ -21,7 +21,7 @@ def apply_styles():
         padding-top: 100px !important;
         padding-left: 1.5rem !important;
         padding-right: 1.5rem !important;
-        max-width: 100% !important; /* תופס את כל רוחב הטלפון */
+        max-width: 100% !important;
         margin: 0 auto;
     }
 
@@ -54,15 +54,35 @@ def apply_styles():
         overflow: hidden;
     }
 
-    /* 5. תיקון ה-Sidebar (התפריט שנפתח מה-3 פסים) */
+    /* 5. תיקון ה-Sidebar */
     [data-testid="stSidebar"] {
         background-color: white !important;
-        width: 280px !important; /* רוחב קבוע לתפריט הצדי */
+        width: 280px !important;
+    }
+
+    /* ===== הזזה לימין ===== */
+
+    /* מזיז את הסיידבר לימין */
+    section[data-testid="stSidebar"]{
+        right:0;
+        left:auto;
+    }
+
+    /* מזיז את כפתור ה-3 פסים לימין */
+    button[kind="header"]{
+        right:1rem;
+        left:auto;
+    }
+
+    /* שומר שהתוכן לא יברח */
+    .css-18e3th9{
+        padding-right:1rem;
     }
 
     /* ביטול מרווחים מיותרים בטלפון */
     [data-testid="stVerticalBlock"] {
         gap: 0.5rem !important;
     }
+
     </style>
     """, unsafe_allow_html=True)
