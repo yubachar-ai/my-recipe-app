@@ -1,40 +1,50 @@
 import google.generativeai as genai
 import pandas as pd
-import os
+import streamlit as st
+from streamlit_gsheets import GSheetsConnection
 
 # הגדרת ה-AI
 def setup_ai(api_key):
     genai.configure(api_key=api_key)
     return genai.GenerativeModel('models/gemini-3-flash-preview')
 
-# הפרומפט שביקשת (נקי ומדויק)
 RECIPE_PROMPT = """
 תפקיד: מחלץ נתונים מקצועי מתמונות מתכונים.
 המשימה: חלץ את המידע מהתמונה והחזר אותו בעברית לפי הפורמט הבא בלבד.
-
-הנחיות קשיחות:
-1. אל תוסיף הקדמות כמו "הנה המתכון" או סיכומים כמו "בתיאבון".
-2. אל תוסיף טיפים, הערות או מידע שלא מופיע מפורשות בתמונה.
-3. השורה הראשונה חייבת להיות שם המתכון בלבד.
-4. השתמש בכותרות Markdown (סימן # לשם המתכון, ## למצרכים וכו').
-
-פורמט פלט:
-[שם המתכון]
-### 🛒 מצרכים:
-[רשימת המצרכים כפי שמופיעה]
-### 👨‍🍳 הוראות הכנה:
-[שלבי ההכנה כפי שמופיעים]
+הנחיות: השורה הראשונה היא שם המתכון בלבד. אל תוסיף הקדמות.
 """
 
-def save_recipe_to_csv(name, content, category):
-    file_name = 'my_recipes.csv'
-    df_new = pd.DataFrame({'שם': [name], 'קטגוריה': [category], 'תוכן': [content]})
-    if not os.path.isfile(file_name):
-        df_new.to_csv(file_name, index=False, encoding='utf-8-sig')
-    else:
-        df_new.to_csv(file_name, mode='a', index=False, header=False, encoding='utf-8-sig')
+def get_connection():
+    return st.connection("gsheets", type=GSheetsConnection)
 
-def load_recipes():
-    if os.path.isfile('my_recipes.csv'):
-        return pd.read_csv('my_recipes.csv', encoding='utf-8-sig')
-    return None
+def save_recipe_to_cloud(user_name, name, content, category):
+    conn = get_connection()
+    url = "כאן_הדביקי_את_הלינק_של_הגיליון_שלך"
+    
+    # קריאת הנתונים הקיימים
+    try:
+        df = conn.read(spreadsheet=url)
+    except:
+        df = pd.DataFrame(columns=['user', 'name', 'category', 'content'])
+    
+    # יצירת שורה חדשה
+    new_data = pd.DataFrame({
+        'user': [user_name],
+        'name': [name],
+        'category': [category],
+        'content': [content]
+    })
+    
+    updated_df = pd.concat([df, new_data], ignore_index=True)
+    
+    # שמירה חזרה לענן
+    conn.update(spreadsheet=url, data=updated_df)
+
+def load_recipes_from_cloud(user_name):
+    conn = get_connection()
+    url = "כאן_הדביקי_את_הלינק_של_הגיליון_שלך"
+    try:
+        df = conn.read(spreadsheet=url)
+        return df[df['user'] == user_name]
+    except:
+        return pd.DataFrame()
