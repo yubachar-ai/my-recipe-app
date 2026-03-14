@@ -11,7 +11,7 @@ HERO_IMAGE = "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=2
 BOOK_IMAGE = "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=2070&auto=format&fit=crop"
 
 if 'user_email' not in st.session_state:
-    st.image(HERO_IMAGE, class_name="hero-img")
+    st.image("https://...", use_container_width=True)
     st.markdown("<h1 style='text-align: center;'>RecipeAI</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; font-size: 1.2rem;'>הופכים זיכרונות משפחתיים לנכס דיגיטלי</p>", unsafe_allow_html=True)
     
