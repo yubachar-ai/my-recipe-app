@@ -7,7 +7,7 @@ from pages_content import show_add_recipe, show_my_book
 st.set_page_config(
     page_title="RecipeAI", 
     layout="centered", # שיניתי ל-centered בשביל יציבות בטלפון
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="auto"
 )
 apply_styles()
 
