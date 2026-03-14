@@ -20,11 +20,19 @@ st.markdown(f'<div class="main-header"><h1 class="header-title">ספר המתכ�
 
 # תפריט (Sidebar)
 with st.sidebar:
+
     st.markdown("### תפריט")
-    mode = st.radio("לאן לעבור?", ["📚 הספר שלי", "✨ הוספת מתכון"], label_visibility="collapsed")
+
+    mode = st.radio(
+
+        ["📚 הספר שלי", "✨ הוספת מתכון"],
+        label_visibility="collapsed"
+    )
+
     if st.button("יציאה מהחשבון"):
         del st.session_state['user_email']
         st.rerun()
+
 
 # תוכן
 if mode == "✨ הוספת מתכון":
