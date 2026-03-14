@@ -24,7 +24,7 @@ with st.sidebar:
     st.markdown("### תפריט")
 
     mode = st.radio(
-
+        "לאן לעבור?",
         ["📚 הספר שלי", "✨ הוספת מתכון"],
         label_visibility="collapsed"
     )
@@ -32,6 +32,7 @@ with st.sidebar:
     if st.button("יציאה מהחשבון"):
         del st.session_state['user_email']
         st.rerun()
+
 
 
 # תוכן
