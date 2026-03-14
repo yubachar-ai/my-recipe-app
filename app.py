@@ -72,20 +72,67 @@ if mode == "✨ סריקת מתכון":
             st.rerun()
 
 # --- מצב אלבום ---
+# --- בתוך app.py, בחלק של ה-else (מצב אלבום) ---
 else:
-    st.markdown(f"<h1 style='text-align: right;'>האלבום של {st.session_state.first_name}</h1>", unsafe_allow_html=True)
-    st.image(BOOK_IMAGE, use_container_width=True)
-    
     df = load_recipes_from_cloud(st.session_state.user_email)
     
-    if not df.empty:
-        # סרגל חיפוש בעברית
-        search = st.text_input("🔍 חפשי מתכון...", placeholder="מה בא לך לבשל?")
-        if search:
-            df = df[df['name'].str.contains(search, case=False, na=False)]
-            
-        for i, row in df.iterrows():
-            with st.expander(f"📖 {row['name']} | {row.get('date', '')}"):
-                st.markdown(f"<div class='recipe-card'>{row['content']}</div>", unsafe_allow_html=True)
+    # אתחול מספר עמוד אם לא קיים
+    if 'page_index' not in st.session_state:
+        st.session_state.page_index = 0
+
+    # תפריט עליון קטן ליציאה חזרה לדף הבית
+    if st.button("⬅️ חזרה לתפריט"):
+        st.session_state.page_index = 0
+        st.rerun()
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # יצירת האזור של הספר
+    if df.empty:
+        st.info("הספר שלך עדיין ריק. סרקי מתכון כדי להתחיל!")
     else:
-        st.info("עדיין אין מתכונים באלבום. זמן להתחיל לסרוק!")
+        # סה"כ עמודים: כריכה + כמות המתכונים
+        total_pages = len(df) + 1 
+        current_idx = st.session_state.page_index
+
+        # הצגת התוכן לפי העמוד
+        if current_idx == 0:
+            # --- כריכת הספר ---
+            st.markdown(f"""
+                <div class='book-cover'>
+                    <h4 style='font-family: serif;'>ספר המתכונים של</h4>
+                    <h1 style='color: white; font-size: 45px;'>{st.session_state.first_name}</h1>
+                    <br><br>
+                    <p>📖</p>
+                    <p style='font-size: 14px;'>לחצי על החצים כדי לדפדף</p>
+                </div>
+            """, unsafe_allow_html=True)
+        else:
+            # --- עמוד מתכון (דפדוף) ---
+            recipe = df.iloc[current_idx - 1] # -1 כי עמוד 0 הוא הכריכה
+            st.markdown(f"""
+                <div class='recipe-page'>
+                    <p style='color: #BC8F8F; font-size: 14px;'>{recipe.get('category', 'כללי')} | {recipe.get('date', '')}</p>
+                    <h1 class='serif-font' style='border-bottom: 1px solid #eee; padding-bottom: 10px;'>{recipe['name']}</h1>
+                    <div style='margin-top: 20px;'>{recipe['content']}</div>
+                </div>
+            """, unsafe_allow_html=True)
+
+        # סרגל ניווט תחתון (החצים)
+        st.markdown("<br>", unsafe_allow_html=True)
+        nav_col1, nav_col2, nav_col3 = st.columns([1, 2, 1])
+        
+        with nav_col1:
+            if current_idx > 0:
+                if st.button("➡️ הקודם"):
+                    st.session_state.page_index -= 1
+                    st.rerun()
+        
+        with nav_col2:
+            st.markdown(f"<p style='text-align: center;'>עמוד {current_idx + 1} מתוך {total_pages}</p>", unsafe_allow_html=True)
+            
+        with nav_col3:
+            if current_idx < total_pages - 1:
+                if st.button("הבא ⬅️"):
+                    st.session_state.page_index += 1
+                    st.rerun()
