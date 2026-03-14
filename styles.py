@@ -5,17 +5,18 @@ def apply_styles():
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Assistant:wght@300;400;600&display=swap');
 
-    /* רקע לינן ויישור לימין */
+    /* מחיקת תפריט הניווט האוטומטי שחונק את המסך */
+    [data-testid="stSidebarNav"] {display: none !important;}
+    [data-testid="stHeader"] {display: none !important;}
+    footer {display: none !important;}
+
+    /* רקע ויישור לימין */
     .stApp { 
         background-color: #F9F7F2; 
         direction: rtl; 
     }
-    
-    /* הסתרת כפתורי סטרימליט מיותרים והתפריט המובנה שצף */
-    #MainMenu, footer, header {visibility: hidden !important;}
-    [data-testid="stHeader"] {background: rgba(0,0,0,0) !important;}
 
-    /* הבר העליון הממותג שלנו */
+    /* הבר העליון הלבן */
     .main-header {
         background-color: #FFFFFF;
         padding: 20px;
@@ -25,8 +26,7 @@ def apply_styles():
         top: 0;
         left: 0;
         right: 0;
-        z-index: 999;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        z-index: 1000;
     }
     
     .header-title {
@@ -36,33 +36,28 @@ def apply_styles():
         font-size: 22px;
     }
 
-    /* מרווח לתוכן - למנוע מהכותרת להסתיר */
+    /* תיקון מרווחים כדי שהתוכן לא ייחתך */
     .block-container {
         padding-top: 100px !important;
-        max-width: 800px !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        max-width: 100% !important;
     }
 
-    /* עיצוב כרטיסיית מתכון */
+    /* עיצוב רשימת המתכונים */
+    .stExpander {
+        background-color: white !important;
+        border: 1px solid #E8E4D8 !important;
+        border-radius: 8px !important;
+        margin-bottom: 10px !important;
+    }
+
     .recipe-card {
         background: white;
-        padding: 30px;
-        border-radius: 4px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-        border-right: 6px solid #556B2F;
-        margin-bottom: 20px;
+        padding: 20px;
         text-align: right;
-    }
-
-    /* עיצוב ה-Sidebar */
-    [data-testid="stSidebar"] {
-        background-color: #FFFFFF !important;
-        border-left: 1px solid #E8E4D8;
-    }
-    
-    /* הפיכת ה-Radio למשהו שנראה כמו תפריט יוקרתי */
-    .stRadio > div {
-        flex-direction: column !important;
-        gap: 15px;
+        direction: rtl;
+        line-height: 1.6;
     }
     </style>
     """, unsafe_allow_html=True)
