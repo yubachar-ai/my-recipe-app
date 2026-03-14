@@ -5,46 +5,42 @@ def apply_styles():
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Assistant:wght@300;400;600&display=swap');
 
-    .stApp { background-color: #F9F7F2; }
+    .stApp { background-color: #F9F7F2; direction: rtl; }
     header, footer, [data-testid="stHeader"] {display: none !important;}
 
-    /* מבנה הספר */
-    .swiper { width: 100%; height: 85vh; padding-top: 20px; }
-    
-    .swiper-slide {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    /* עיצוב הטאבים (הפרקים בספר) */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 10px;
+        background-color: transparent;
     }
 
-    .book-cover {
-        background-color: #556B2F;
-        color: white;
-        width: 320px;
-        height: 500px;
-        border-radius: 5px 15px 15px 5px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 15px 15px 30px rgba(0,0,0,0.2);
-        border-left: 10px solid #3e4f22;
+    .stTabs [data-baseweb="tab"] {
+        background-color: #FFFFFF;
+        border: 1px solid #E8E4D8;
+        border-radius: 4px 4px 0 0;
+        padding: 10px 20px;
+        font-family: 'Assistant', sans-serif;
+        color: #556B2F;
     }
 
+    .stTabs [aria-selected="true"] {
+        background-color: #556B2F !important;
+        color: white !important;
+        border-color: #556B2F !important;
+    }
+
+    /* דף המתכון */
     .recipe-page {
         background: white;
-        width: 90%;
-        max-width: 450px;
-        height: 600px;
-        padding: 40px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        border-radius: 2px;
-        direction: rtl;
+        padding: 60px 40px;
+        max-width: 800px;
+        margin: 0 auto;
+        border-radius: 0 0 12px 12px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+        border-right: 10px solid #556B2F;
         text-align: right;
-        overflow-y: auto;
     }
+
+    h1, h2 { font-family: 'Playfair Display', serif !important; color: #2D2926; }
     </style>
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     """, unsafe_allow_html=True)
