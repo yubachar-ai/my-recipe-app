@@ -3,71 +3,51 @@ import streamlit as st
 def apply_styles():
     st.markdown("""
     <style>
-    /* ייבוא פונטים יוקרתיים בעברית */
-    @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700&family=Heebo:wght@300;500;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Assistant:wght@300;400;600&display=swap');
 
-    /* הגדרות כלליות ויישור לימין */
-    .stApp {
-        background-color: #F9F7F2;
+    .stApp { background-color: #F9F7F2; }
+
+    /* כריכת הספר */
+    .book-cover {
+        background-color: #556B2F;
+        color: white;
+        padding: 60px;
+        border-radius: 5px 15px 15px 5px;
+        box-shadow: 15px 15px 30px rgba(0,0,0,0.2);
+        text-align: center;
+        margin: 0 auto;
+        max-width: 400px;
+        border-left: 10px solid #3e4f22;
+    }
+
+    /* דף המתכון עם אנימציית דפדוף */
+    .recipe-page {
+        background: white;
+        padding: 50px;
+        max-width: 600px;
+        margin: 0 auto;
+        min-height: 700px;
+        box-shadow: 5px 5px 20px rgba(0,0,0,0.05);
+        border-right: 1px solid #E8E4D8;
         direction: rtl;
         text-align: right;
+        font-family: 'Assistant', sans-serif;
+        animation: flipPage 0.6s ease-out;
     }
 
-    /* שינוי פונט לכל האפליקציה - להתראות אריאל */
-    html, body, [class*="st-"] {
-        font-family: 'Assistant', sans-serif !important;
+    @keyframes flipPage {
+        from { transform: rotateY(-15deg) translateX(50px); opacity: 0.5; }
+        to { transform: rotateY(0deg) translateX(0); opacity: 1; }
     }
 
-    h1, h2, h3 {
-        font-family: 'Playfair Display', serif !important;
-        color: #2D2926 !important;
-    }
-
-    /* כרטיסיית מתכון בסגנון מגזין */
-    .recipe-card {
-        background-color: white;
-        padding: 40px;
-        border-radius: 4px;
-        border-right: 6px solid #556B2F;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-        line-height: 1.8;
-        direction: rtl;
-        text-align: right;
-        font-size: 18px;
-    }
-
-    /* עיצוב תמונות */
-    .hero-img {
-        width: 100%;
-        border-radius: 12px;
-        object-fit: cover;
-        height: 300px;
-        margin-bottom: 30px;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-    }
-
-    /* יישור ספציפי לתיבות טקסט של סטרימליט */
-    input, textarea {
-        direction: rtl !important;
-        text-align: right !important;
-    }
-
-    /* עיצוב כפתורים */
-    .stButton>button {
-        width: 100%;
-        background-color: #556B2F !important;
-        color: white !important;
-        border-radius: 0px !important;
-        border: none !important;
-        padding: 15px !important;
-        font-weight: 700 !important;
-        letter-spacing: 1px;
-    }
-    
-    /* סידור ה-Sidebar */
-    section[data-testid="stSidebar"] {
-        direction: rtl;
-        text-align: right;
+    /* כפתורי דפדוף */
+    .nav-button {
+        background: transparent !important;
+        border: 1px solid #556B2F !important;
+        color: #556B2F !important;
+        border-radius: 50% !important;
+        width: 50px;
+        height: 50px;
     }
     </style>
     """, unsafe_allow_html=True)
