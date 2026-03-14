@@ -9,16 +9,21 @@ apply_styles()
 
 # 1. מסך כניסה לפי אימייל (מזהה ייחודי)
 if 'user_email' not in st.session_state:
-    st.markdown("<h1 style='text-align: center;'>ברוכה הבאה ל-RecipeAI</h1>", unsafe_allow_html=True)
-    email = st.text_input("הקלידי כתובת אימייל (המזהה האישי שלך):", placeholder="example@mail.com")
-    if st.button("כניסה לספר המתכונים שלי"):
-        if "@" in email and "." in email:
+    st.markdown("<h1 style='text-align: center; color: #FF4B4B;'>🍎 RecipeAI Kitchen</h1>", unsafe_allow_html=True)
+    
+    col_login1, col_login2 = st.columns(2)
+    with col_login1:
+        first_name = st.text_input("איך קוראים לך?", placeholder="שם פרטי")
+    with col_login2:
+        email = st.text_input("כתובת אימייל:", placeholder="email@example.com")
+        
+    if st.button("כניסה למטבח האישי שלי 👩‍🍳"):
+        if first_name and "@" in email:
             st.session_state.user_email = email.lower().strip()
+            st.session_state.first_name = first_name
             st.rerun()
-        else:
-            st.error("בבקשה הזיני כתובת אימייל תקינה.")
     st.stop()
-
+    
 # 2. שליפת נתונים מהכספת ואתחול המוח
 current_user = st.session_state.user_email
 api_key = st.secrets["GEMINI_API_KEY"]
